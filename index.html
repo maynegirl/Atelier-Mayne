@@ -1377,6 +1377,10 @@
           <input class="form-input" id="email" type="email" placeholder="you@example.com" required />
         </div>
         <div class="form-group">
+          <label class="form-label" for="phone">Phone Number</label>
+          <input class="form-input" id="phone" type="tel" placeholder="+91 00000 00000" />
+        </div>
+        <div class="form-group">
           <label class="form-label" for="project">Nature of Project</label>
           <input class="form-input" id="project" type="text" placeholder="e.g. Private residence, Heritage restoration…" />
         </div>
@@ -1414,24 +1418,17 @@
     </div>
   </footer>
 
-  <!-- ─── EmailJS — sends contact form to hello@ateliermayne.com ─────
-       Setup (one-time, free):
-       1. Create account at https://www.emailjs.com
-       2. Add an Email Service (Gmail / custom SMTP) → copy Service ID
-       3. Create an Email Template with variables:
-          {{from_name}}, {{from_email}}, {{project_type}}, {{message}}
-          → copy Template ID
-       4. Go to Account → API Keys → copy your Public Key
-       5. Replace the three placeholder strings below                   -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- ─── Google Apps Script webhook ─────────────────────────────────
+       Logs every enquiry to Google Sheet + emails hello@ateliermayne.com
+       Setup (one-time):
+       1. Open your Google Sheet
+       2. Extensions → Apps Script → paste the code from APPS_SCRIPT.js
+       3. Deploy → New Deployment → Web App
+          · Execute as: Me
+          · Who has access: Anyone
+       4. Copy the Web App URL and paste it below                       -->
   <script>
-    // ─── Replace these three values after EmailJS setup ──────────────
-    const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
-    const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
-    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-    // ─────────────────────────────────────────────────────────────────
-
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
   </script>
 
   <!-- ─── Scripts ──────────────────────────────────────────────────── -->
@@ -1457,34 +1454,38 @@
     },{ threshold:.10, rootMargin:'0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-    // Contact form — EmailJS
+    // Contact form — Google Apps Script → Google Sheet
     function handleSubmit(e) {
       e.preventDefault();
       const form = e.target;
       const btn  = form.querySelector('.form-submit');
 
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-
-      const params = {
-        from_name:    form.querySelector('#name').value,
-        from_email:   form.querySelector('#email').value,
-        project_type: form.querySelector('#project').value,
-        message:      form.querySelector('#message').value,
+      const data = {
+        name:    form.querySelector('#name').value,
+        email:   form.querySelector('#email').value,
+        phone:   form.querySelector('#phone').value,
+        project: form.querySelector('#project').value,
+        message: form.querySelector('#message').value,
       };
 
-      // If EmailJS not yet configured, fall back to mailto so no lead is lost
-      if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+      // Fallback to mailto if Apps Script URL not yet configured
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL') {
         const body = encodeURIComponent(
-          `Name: ${params.from_name}\nEmail: ${params.from_email}\nProject: ${params.project_type}\n\n${params.message}`
+          `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nProject: ${data.project}\n\n${data.message}`
         );
         window.location.href = `mailto:hello@ateliermayne.com?subject=Commission Enquiry — Atelier Mayne&body=${body}`;
-        btn.textContent = 'Send Enquiry';
-        btn.disabled = false;
         return;
       }
 
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
         .then(() => {
           btn.textContent = 'Sent ✦';
           btn.style.background = '#9D381A';

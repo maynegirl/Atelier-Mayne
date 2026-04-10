@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const SHEET_ID    = '1_qkYkTsLQz2yP2xE8WAYYJjmprvyZfQjB4RTczu0l_M';
-const NOTIFY_EMAIL = 'hello@ateliermayne.com';
+const NOTIFY_EMAIL = 'anjali@ateliermayne.com';
 
 function doPost(e) {
   try {

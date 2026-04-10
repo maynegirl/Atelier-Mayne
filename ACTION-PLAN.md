@@ -1,46 +1,139 @@
-# Atelier Mayne — SEO & AEO Action Plan
-**Date:** 2026-04-09 | Prioritised by impact × effort
+# Atelier Mayne — SEO/AEO Action Plan
+**Based on:** Full Audit — April 10, 2026  
+**Current Score:** 75/100  
+**Target Score:** 88/100
 
 ---
 
-## 🔴 Priority 1 — Fix Now (Schema Errors Hurting Credibility)
+## 🔴 Critical — Fix Immediately (Estimated gain: +6 pts)
 
-| # | Fix | File | Effort |
-|---|-----|------|--------|
-| 1 | Remove `FAQPage` schema (restricted to gov/healthcare) | index.html | 2 min |
-| 2 | Replace `InteriorDesigner` with `LocalBusiness` + `ProfessionalService` | index.html | 5 min |
-| 3 | URL-encode space in logo path (`Logo 1` → `Logo%201`) | index.html | 1 min |
-| 4 | Remove `AggregateRating` schema until third-party reviews exist | index.html | 2 min |
-| 5 | Fix Pinterest `sameAs` to canonical profile URL | index.html | 1 min |
-| 6 | Add `WebSite` schema with `SearchAction` | index.html | 5 min |
-| 7 | Change `<html lang="en">` to `<html lang="en-IN">` | index.html | 1 min |
+### 1. Create og-image.jpg
+- **What:** 1200×630px branded social share image
+- **Why:** og:image URL is live in code but file returns 404 — all social shares render with no preview
+- **How:** Design a 1200×630px image (hero photo + logo overlay + studio name), save as `og-image.jpg` in `Website Build/`, push to GitHub
+- **Impact:** Fixes social previews on LinkedIn, Facebook, WhatsApp, iMessage, X
 
----
+### 2. Add Full Open Graph Tags
+- **What:** Add og:title, og:description, og:type, og:url to `<head>` of index.html
+- **Why:** Only og:image is present — social platforms use heuristics as fallback, resulting in unpredictable card rendering
+- **How:**
+```html
+<meta property="og:title" content="Atelier Mayne — Boutique Interior Design Studio, Mumbai" />
+<meta property="og:description" content="A bespoke interiors practice drawing from the depth of Indian craft tradition — creating spaces of quiet authority for a discerning few." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.ateliermayne.com" />
+<meta property="og:image" content="https://www.ateliermayne.com/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+```
 
-## ⚠️ Priority 2 — Fix Soon (Technical Gaps)
-
-| # | Fix | File | Effort |
-|---|-----|------|--------|
-| 8 | Create `robots.txt` with AI crawler rules | robots.txt | 5 min |
-| 9 | Create `sitemap.xml` | sitemap.xml | 10 min |
-| 10 | Create `llms.txt` for AI search readiness | llms.txt | 10 min |
-| 11 | Add `speakable` property to LocalBusiness schema | index.html | 5 min |
-| 12 | Add `loading="lazy"` to below-fold images | index.html | 5 min |
-
----
-
-## ℹ️ Priority 3 — When Ready (Content & Assets)
-
-| # | Fix | Notes |
-|---|-----|-------|
-| 13 | Add founder photo | E-E-A-T trust signal |
-| 14 | Create `og-image.jpg` (1200×630) | Social sharing CTR |
-| 15 | Convert images to WebP | ~30% load time improvement |
-| 16 | Add press/recognition section | E-E-A-T authority boost |
-| 17 | Link testimonials to Google Business Profile | Verifiability |
-| 18 | Set up Google Business Profile | Local SEO + verified reviews |
+### 3. Add Twitter Card Tags
+- **What:** Add twitter:card, title, description, image to `<head>` of index.html
+- **Why:** No Twitter card tags — shares on X render as plain links with no engagement
+- **How:**
+```html
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Atelier Mayne — Boutique Interior Design Studio, Mumbai" />
+<meta name="twitter:description" content="A bespoke interiors practice drawing from the depth of Indian craft tradition." />
+<meta name="twitter:image" content="https://www.ateliermayne.com/og-image.jpg" />
+```
 
 ---
 
-## Items Being Fixed Now
-1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12 — implemented directly in this session.
+## ⚠️ Warnings — Fix Within 2 Weeks (Estimated gain: +5 pts)
+
+### 4. Fix H1 Tag Structure
+- **What:** Demote all section-level H1s to H2 throughout index.html
+- **Why:** 10+ H1 tags dilute the primary topic signal Google uses for ranking
+- **Sections to demote:** "The Practice", "Rooted in tradition", "The World We Draw From", "What We Offer", "Our services", "How We Work", "The process", "Client Voices", "In their words", "Before You Write", "A few things worth knowing", "Begin a Commission", "Let us create a space that remains"
+- **Keep as H1:** Only "Designed to feel discovered, not built."
+
+### 5. Add Meta Tags to privacy.html
+- **What:** Add title, meta description, and canonical to privacy.html `<head>`
+- **How:**
+```html
+<title>Privacy Policy & Terms of Use — Atelier Mayne</title>
+<meta name="description" content="Atelier Mayne's Privacy Policy (DPDP Act 2023) and Terms of Use, governing the use of our website and interior design services. Mumbai, India." />
+<link rel="canonical" href="https://www.ateliermayne.com/privacy.html" />
+```
+
+### 6. Add privacy.html to sitemap.xml
+- **What:** Add second `<url>` entry for privacy.html
+- **How:**
+```xml
+<url>
+  <loc>https://www.ateliermayne.com/privacy.html</loc>
+  <lastmod>2026-04-10</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.3</priority>
+</url>
+```
+
+### 7. Add Monogram Alt Text
+- **What:** Add `alt="Atelier Mayne monogram"` to the Logo 4 monogram image in index.html
+- **Why:** Missing alt text is an accessibility violation and minor image SEO gap
+
+### 8. Fix Pinterest Short URL
+- **What:** Replace `pin.it/3uWBlJ2iT` with `https://www.pinterest.com/ateliermayne/` in index.html, privacy.html, and llms.txt
+- **Why:** Short URLs reduce crawler trust signals
+
+### 9. Add Hero Image Preload
+- **What:** Add `<link rel="preload" as="image" href="website_images/1.jpg">` to `<head>`
+- **Why:** Hero background is the LCP element — preloading it reduces LCP time
+
+---
+
+## ℹ️ Medium Term — Within 1 Month (Estimated gain: +4 pts)
+
+### 10. Add AggregateRating Schema
+- **What:** Add AggregateRating block to the LocalBusiness schema
+- **Why:** Enables star rating display in SERPs — high CTR impact
+- **How (add inside LocalBusiness schema):**
+```json
+"aggregateRating": {
+  "@type": "AggregateRating",
+  "ratingValue": "5",
+  "reviewCount": "3",
+  "bestRating": "5"
+}
+```
+
+### 11. Convert Portfolio Images to WebP
+- **What:** Convert website_images/1-6.jpg and founder_photo.jpeg to WebP
+- **Why:** ~30% file size reduction — improves LCP and overall load performance
+- **How:** Use Squoosh (squoosh.app — free), save as `.webp`, serve via `<picture>` element with JPEG fallback
+
+### 12. Add Width/Height to All Images
+- **What:** Add explicit `width` and `height` attributes to all `<img>` tags
+- **Why:** Prevents Cumulative Layout Shift (CLS) — a Core Web Vitals metric
+
+---
+
+## 🏆 Longer Term — As Business Grows
+
+### 13. Earn E-E-A-T Signals
+- Get listed in India Design Council, Institute of Indian Interior Designers, or similar bodies
+- Seek press coverage from Architectural Digest India, Elle Decor India, Vogue Living India
+- Add any media mentions, award logos, or association badges to the website
+
+### 14. Add Individual Portfolio/Project Pages
+- Create dedicated pages for completed projects (e.g. `/projects/chatterjee-residence`)
+- Add BreadcrumbList schema when multi-page structure is in place
+- Each page becomes an independent SEO asset that can rank for location + style queries
+
+### 15. Set Up Google Business Profile
+- Register at google.com/business with Mumbai address, phone, and website
+- Add photos of work, services, and founder
+- Request reviews from clients (Chatterjee, Karak, Roy are already satisfied clients)
+- Critical for local search: "interior designer Mumbai", "luxury interior design Mumbai"
+
+---
+
+## Score Projection
+
+| Milestone | Score |
+|---|---|
+| Current | 75/100 |
+| After Criticals (#1–3) | ~81/100 |
+| After Warnings (#4–9) | ~86/100 |
+| After Medium Term (#10–12) | ~90/100 |

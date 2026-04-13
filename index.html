@@ -167,8 +167,37 @@
   }
   </script>
 
-  <!-- AggregateRating schema removed — re-add once third-party verified reviews exist (Google Business Profile / Houzz) -->
   <!-- FAQPage schema removed — restricted to government/healthcare sites since Aug 2023 -->
+
+  <!-- ─── Review schema — individual client testimonials ──────────────  -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "author": { "@type": "Person", "name": "Sumon & Sanhita Chatterjee" },
+      "reviewBody": "Anjali brought a depth of cultural understanding to our home that we hadn't thought possible. Every corner tells a story — of craft, of memory, of India. We did not receive an interior. We received an heirloom.",
+      "itemReviewed": { "@type": "LocalBusiness", "name": "Atelier Mayne", "url": "https://www.ateliermayne.com" }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "author": { "@type": "Person", "name": "Avik & Priyanka Karak" },
+      "reviewBody": "Our apartment needed to feel like a refuge — calm, considered, and entirely our own. Anjali understood that instinctively. What she delivered was not just a beautifully designed space, but a home that genuinely reflects who we are. The result is quiet, precise, and deeply personal.",
+      "itemReviewed": { "@type": "LocalBusiness", "name": "Atelier Mayne", "url": "https://www.ateliermayne.com" }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "author": { "@type": "Person", "name": "Rupak Roy" },
+      "reviewBody": "Working with Anjali is an exercise in trust and patience — both of which she rewards beyond expectation. Our penthouse is serene, considered, and unmistakably Indian without being obvious about it. Exactly what we asked for.",
+      "itemReviewed": { "@type": "LocalBusiness", "name": "Atelier Mayne", "url": "https://www.ateliermayne.com" }
+    }
+  ]
+  </script>
 
   <!-- ─── Fonts served locally from fonts/ folder ──────────────────── -->
 
@@ -1090,7 +1119,10 @@
   <section id="about" class="sec-pad">
     <div class="about-visual reveal">
       <div class="about-logo-frame">
-        <img src="website_images/6.jpg" alt="Curated interior space — Atelier Mayne" loading="lazy" />
+        <picture>
+          <source srcset="website_images/6.webp" type="image/webp" />
+          <img src="website_images/6.jpg" alt="Curated interior space — Atelier Mayne" loading="lazy" width="600" height="800" />
+        </picture>
       </div>
       <div class="about-stats">
         <div class="stat-block">
@@ -1119,7 +1151,10 @@
       <div class="about-founder reveal d4">
         <div class="founder-avatar">
           <!-- Replace src with Anjali's photo path when available -->
-          <img src="website_images/founder_photo.jpeg" alt="Anjali Mayne — Founder & Principal Designer, Atelier Mayne" />
+          <picture>
+            <source srcset="website_images/founder_photo.webp" type="image/webp" />
+            <img src="website_images/founder_photo.jpeg" alt="Anjali Mayne — Founder & Principal Designer, Atelier Mayne" width="300" height="300" />
+          </picture>
         </div>
         <div>
           <div class="founder-name">Anjali Mayne</div>
@@ -1141,13 +1176,22 @@
     </div>
     <div class="vs-grid">
       <div class="vs-item reveal">
-        <img src="website_images/3.jpg" alt="Cane and teak living space" loading="lazy" />
+        <picture>
+          <source srcset="website_images/3.webp" type="image/webp" />
+          <img src="website_images/3.jpg" alt="Cane and teak living space" loading="lazy" width="600" height="800" />
+        </picture>
       </div>
       <div class="vs-item reveal d1">
-        <img src="website_images/4.jpg" alt="Light-filled interior with arched window" loading="lazy" />
+        <picture>
+          <source srcset="website_images/4.webp" type="image/webp" />
+          <img src="website_images/4.jpg" alt="Light-filled interior with arched window" loading="lazy" width="600" height="800" />
+        </picture>
       </div>
       <div class="vs-item reveal d2">
-        <img src="website_images/2.jpg" alt="Hand-carved craft chairs with Warli inlay" loading="lazy" />
+        <picture>
+          <source srcset="website_images/2.webp" type="image/webp" />
+          <img src="website_images/2.jpg" alt="Hand-carved craft chairs with Warli inlay" loading="lazy" width="600" height="800" />
+        </picture>
       </div>
     </div>
   </section>
